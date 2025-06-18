@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Stats from 'stats-js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 //import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 
