@@ -9,8 +9,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 // 씬, 카메라, 렌더러 셋업
 const scene = new THREE.Scene();
 
-const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/'); // use official hosted decoder
+// const dracoLoader = new DRACOLoader();
+// dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/'); 
 
 // 스카이 돔
 const textureLoader = new THREE.TextureLoader();
