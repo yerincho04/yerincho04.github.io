@@ -2,14 +2,19 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Stats from 'stats-js';
-//import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+//import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 
 // 씬, 카메라, 렌더러 셋업
 const scene = new THREE.Scene();
 
-// const dracoLoader = new DRACOLoader();
-// dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/'); 
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/'); // use official hosted decoder
+
+const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader);
+
 
 // 스카이 돔
 const textureLoader = new THREE.TextureLoader();
@@ -138,7 +143,7 @@ const stats = new Stats();
 document.body.appendChild(stats.dom);
 
 // GLTF 로더
-const gltfLoader = new GLTFLoader();
+const gltfLoader = loader;
 
 // 부스트 패드 생성 함수 및 배열 선언 [부스트]
 function createBoostPad(x, z) {
