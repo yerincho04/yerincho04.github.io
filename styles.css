@@ -101,3 +101,16 @@ footer a:last-child { margin-left: auto; }
   .dated-entry, .work-entry { break-inside: avoid; }
   a { text-decoration: none; }
 }
+
+/* Source links and technical results retain the pure-black text palette. */
+.resource-links { display: flex; flex-wrap: wrap; gap: 7px 19px; font-size: 13px !important; margin-top: 11px; }
+.table-wrap { max-width: 100%; overflow-x: auto; margin: 14px 0; }
+.table-wrap:focus-visible { outline: 2px solid #000000; outline-offset: 3px; }
+table { border-collapse: collapse; width: 100%; font-size: 12px; line-height: 1.5; }
+caption { text-align: left; font-weight: 700; margin-bottom: 10px; }
+th, td { padding: 8px 10px 8px 0; text-align: left; vertical-align: top; border-bottom: 1px solid #000000; }
+thead th { font-weight: 700; }
+tbody th { font-weight: 400; }
+td { white-space: nowrap; font-variant-numeric: tabular-nums; }
+details > .table-wrap { margin-left: 0; }
+details > p + p { margin-top: 10px; }

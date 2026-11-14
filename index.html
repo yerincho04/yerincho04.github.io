@@ -9,7 +9,7 @@
   <meta name="description" content="Yerin Cho — Computer Science at Yonsei University. Experience in AI engineering, vision-language-action models, robot learning, and LLM evaluation.">
   <link rel="canonical" href="https://yerincho04.github.io/">
   <link rel="icon" href="assets/favicon.svg?v=3" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261114-sidebar-black">
+  <link rel="stylesheet" href="styles.css?v=20261114-project-details">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -73,77 +73,160 @@
 
       <section id="research" class="section" aria-labelledby="research-title">
         <h2 id="research-title">Research</h2>
-        <article class="work-entry">
+        <article class="work-entry" id="world-knowledge">
           <div class="entry-heading"><h3>Tracing World Knowledge into Embodied Action in VLA Models</h3><span class="year">2026 – Present</span></div>
-          <p class="metadata">Capstone research · Team lead</p>
-          <p>Leading a four-person team studying why VLA models fail to translate pretrained world knowledge into correct physical actions. Designed matched-control experiments on OpenVLA to distinguish knowledge-retrieval failures from visual-grounding failures.</p>
+          <p class="metadata">Capstone research · Team lead · OpenVLA / Act2Answer diagnostics</p>
+          <p>Leading a four-person team investigating where pretrained world knowledge breaks down on the path to physical action. Built diagnostics on top of Act2Answer and OpenVLA to distinguish instruction understanding, visual grounding, action intent, and motor execution.</p>
+          <p>Matched experiments hold the question, images, layout, random seed, robot initialization, and correct physical target fixed while changing only the instruction: a knowledge question, an explicit object name, or an explicit target location.</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/YeahPick">Code</a><a href="https://github.com/yerincho04/YeahPick/blob/Yerin/diagnostics/MATCHED_EXPERIMENT.md">Experiment design</a><a href="https://github.com/yerincho04/YeahPick/blob/Yerin/VQA_dataset_v2/README.md">VQA dataset</a></p>
           <details>
-            <summary>Technical details</summary>
+            <summary>Diagnostic pipeline and dataset construction</summary>
             <ul>
-              <li>Hold the scene, layout, and initial state fixed while varying only the instruction.</li>
-              <li>Built an evaluation set in place of unreleased Act2Answer assets, audited it for answer leakage, and added an information-free control with decision criteria fixed before experiments.</li>
-              <li>Generated image-based VQA training pairs across 10 categories; comparing supervised fine-tuning, distillation with the model’s own VLM as teacher, and self-distillation fine-tuning.</li>
+              <li><strong>Matched evaluation:</strong> the documented pilot contains 240 unique rollouts and 80 complete matched triplets across original and swapped layouts, with no initialization mismatches.</li>
+              <li><strong>Layerwise analysis:</strong> capture pre-action hidden states at four backbone depths and train linear probes for target-side decoding. Group original and swapped versions of each question into the same split to prevent leakage.</li>
+              <li><strong>Failure analysis:</strong> combine held-out probe predictions, end-effector motion, and final object placement to examine the relationship between decoded target information, movement toward a target, and successful placement.</li>
+              <li><strong>Visual controls:</strong> the photo VQA v2 dataset documents 100 pairs each for state, material attributes, and emotion. Pairs compare the same object category while varying the tested property, with manually reviewed contact sheets and recorded image sources.</li>
+              <li><strong>Training direction:</strong> compare supervised fine-tuning, distillation using the model’s own VLM as teacher, and self-distillation fine-tuning. The pilot’s target-side probes are diagnostic measurements, not evidence of general semantic understanding.</li>
             </ul>
           </details>
         </article>
-        <article class="work-entry">
+        <article class="work-entry" id="asyncmixvla">
           <div class="entry-heading"><h3>AsyncMixVLA</h3><span class="year">2026</span></div>
-          <p class="metadata">UC Irvine · Efficient and robust VLA inference</p>
-          <p>A system that runs a lightweight robot policy by default and switches to a stronger policy when a learned verifier predicts failure. Asynchronous inference and aligned handoff context reduce switching overhead.</p>
-          <p class="result"><strong>Result:</strong> Policy-switch latency reduced from ~271 ms to 2–26 ms in evaluated configurations, with comparable task performance.</p>
-          <p class="publication-status">Paper submitted to DATE 2027.</p>
+          <p class="metadata">UC Irvine · Advisor: Prof. Nikil Dutt · Paper submitted to DATE 2027</p>
+          <p>Adaptive robot-policy orchestration that runs VLA-Adapter by default and invokes OpenVLA-OFT for recovery. A learned trigger uses front and wrist RGB, robot proprioception, Adapter actions, and their history; asynchronous execution and context alignment prepare the stronger policy for handoff.</p>
+          <p>The released system includes a continuous two-stage trigger, visual and state alignment, a learned residual correction, and reproducible evaluation manifests. The learned trigger uses observations available at deployment; an oracle trigger is evaluated separately as an upper bound.</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/AsyncMixVLA">Code</a><a href="https://github.com/yerincho04/AsyncMixVLA/blob/main/results/table2_learned_k4_jointv2/v1_v2_cascade_continuous_TEST_K4_JOINTV2.md">Evaluation report</a></p>
           <details>
-            <summary>Technical details</summary>
-            <p>Identified complementary failure modes of VLA-Adapter and OpenVLA-OFT under environmental perturbations on LIBERO manipulation benchmarks. Aligned visual and proprioceptive observations at policy handoff to support adaptive switching.</p>
+            <summary>Released benchmark results and evaluation scope</summary>
+            <div class="table-wrap" role="region" aria-label="AsyncMixVLA benchmark results" tabindex="0">
+              <table>
+                <caption>Reported LIBERO-10 results · 238 matched evaluation cells</caption>
+                <thead><tr><th scope="col">Method</th><th scope="col">Overall success</th><th scope="col">Perturbed success</th><th scope="col">OFT invocation</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Adapter only</th><td>81.09%</td><td>69.49%</td><td>0.0%</td></tr>
+                  <tr><th scope="row">Full OFT only</th><td>83.19%</td><td>73.73%</td><td>100.0%</td></tr>
+                  <tr><th scope="row">Synchronous switching</th><td>84.45%</td><td>76.27%</td><td>45.8%</td></tr>
+                  <tr><th scope="row">Naive asynchronous</th><td>83.19%</td><td>73.73%</td><td>45.8%</td></tr>
+                  <tr><th scope="row">AsyncMixVLA</th><td>84.87%</td><td>77.12%</td><td>45.8%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>In this release’s timing report, AsyncMixVLA’s median / p95 handoff latency is 0.1 / 224.5 ms, compared with 226.5 / 363.8 ms for synchronous switching.</p>
+            <p>Results are specific to LIBERO-10 and the evaluated translation-style disturbances. The paired success-rate comparisons with synchronous and naive asynchronous switching were not statistically significant in the released report. New tasks, robots, or camera setups require further calibration and validation.</p>
           </details>
         </article>
-        <article class="work-entry">
+        <article class="work-entry" id="fm-sdft">
           <div class="entry-heading"><h3>Continual Learning for Robot Policies (FM-SDFT)</h3><span class="year">2026</span></div>
           <p class="metadata">Capstone research · February – July</p>
-          <p>Adapted self-distillation fine-tuning to continuous-action diffusion policies. Approximated the KL-divergence term using the flow-matching velocity gap between a frozen previous-task teacher and the current student.</p>
-          <p class="result"><strong>Result:</strong> Average success rate on LIBERO improved from 72.0% to 80.5% over experience replay; forgetting (NBT) decreased from 0.223 to 0.171.</p>
+          <p>Studied how robot policies can learn new tasks while retaining earlier ones. Adapted self-distillation fine-tuning to continuous-action policies by matching teacher and student predictions in flow-matching velocity space.</p>
+          <p>The implementation combines a frozen previous-task teacher, Euler-integrated action trajectories, and a task-balanced experience replay buffer. Experiments separate the effects of pretraining, replay, and self-distillation across LIBERO task suites.</p>
+          <p class="result"><strong>Result:</strong> In the evaluation reported in my résumé, average success increased from 72.0% to 80.5% over experience replay, while forgetting (NBT) decreased from 0.223 to 0.171.</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/IngChicken-FM">FM-SDFT code</a><a href="https://github.com/yerincho04/cl_diffusion_ER">Diffusion replay baseline</a></p>
+          <details>
+            <summary>Training design and evaluation</summary>
+            <ul>
+              <li><strong>Flow matching:</strong> replace the DDPM noise-prediction objective with continuous-time velocity prediction and use 10-step Euler integration for action generation.</li>
+              <li><strong>Self-distillation:</strong> generate trajectories with the frozen teacher, interpolate between noise and the generated trajectory, and penalize disagreement between student and teacher velocities.</li>
+              <li><strong>Replay:</strong> distribute a 1,000-sample memory budget across previously seen tasks, rebalance it at task boundaries, and mix replay and current-task examples equally.</li>
+              <li><strong>Ablations:</strong> compare pretraining only, replay only, pretraining plus replay, and additional self-distillation. Evaluate saved checkpoints with success-rate matrices and forgetting metrics.</li>
+              <li><strong>Reproducibility:</strong> the repositories include suite configurations, sequential-training scripts, rollout evaluation, and batch execution support for Slurm and Singularity.</li>
+            </ul>
+          </details>
         </article>
       </section>
 
       <section id="work" class="section" aria-labelledby="projects-title">
         <h2 id="projects-title">Projects</h2>
-        <article class="work-entry">
+        <article class="work-entry" id="gifpt">
           <div class="entry-heading"><h3>GIFPT</h3><span class="year">2025</span></div>
           <p class="metadata">Gold Award · SW-Centered University GenAI Contest</p>
-          <p>A web platform that turns PDFs into Manim animations to explain concepts visually. Designed a staged generation pipeline with structured intermediate representations, validation, automatic retries, and template fallbacks.</p>
-          <p class="tools">OpenAI API · Manim · Structured generation</p>
+          <p>A learning platform that converts uploaded PDFs into explanations and Manim animations. My work focused on a staged generation pipeline: page-level vision analysis, structured JSON, pseudocode, animation instructions, and executable scene code.</p>
+          <p>The application processes rendering jobs asynchronously. A Spring Boot API manages uploads and analysis jobs, Django dispatches AI tasks to Celery workers, and completed videos are stored in S3 and returned through job callbacks.</p>
+          <p class="tools">OpenAI API · Manim · PyMuPDF · Django · Celery · Spring Boot · Docker · S3</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/GIFPT">Code and architecture</a><a href="https://github.com/yerincho04/GIFPT/tree/dev/GIFPT_AI/studio/ai">Generation pipeline</a></p>
           <details>
-            <summary>Technical details</summary>
-            <p>The pipeline progresses from page-level vision summaries to structured JSON, pseudocode IR, animation IR, and code. Domain templates and reference code stabilize output; rule-based checks and recovery steps help animations compile and render reliably.</p>
+            <summary>Generation workflow and reliability</summary>
+            <ul>
+              <li>Render PDF pages to images with PyMuPDF, then use vision-based analysis to extract a summary and concrete video instructions.</li>
+              <li>Separate domain selection, pseudocode, animation representation, and code generation into distinct stages rather than requesting an entire animation in one step.</li>
+              <li>Use domain templates and reference implementations for concepts such as convolution, attention, and sorting. Add rule-based checks, automatic retries, and template fallbacks to improve rendering reliability.</li>
+              <li>Keep analysis and rendering off the request path with background workers, shared file storage, and success/failure callbacks to the API server.</li>
+            </ul>
           </details>
         </article>
-        <article class="work-entry">
+        <article class="work-entry" id="winwin">
           <div class="entry-heading"><h3>점주로 (WinWin)</h3><span class="year">2026</span></div>
           <p class="metadata">AI Developer · February – June</p>
-          <p>Built a data pipeline and database-grounded LLM agents for exploring Korean franchise disclosures. Added franchise-name resolution and orchestration that combines multiple agents’ outputs into unified responses.</p>
-          <p class="tools">Data pipelines · LLM agents · Multi-agent orchestration</p>
+          <p>A franchise exploration service grounded in Korea Fair Trade Commission disclosure data. Built collection and normalization pipelines across five data tables covering 2021–2024, then connected the resulting records to LLM tools for brand overviews, comparisons, filtered searches, and year-by-year trends.</p>
+          <p>The web application lets users filter brands by industry and startup budget, inspect operating statistics and startup costs, save brands, compare two candidates, and ask questions about a selected brand.</p>
+          <p class="tools">Python · FastAPI · LangChain · OpenAI API · JSON data pipelines · JavaScript</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/DB_Chatbot">Agent and data code</a><a href="https://github.com/yerincho04/SWAI">Web application</a><a href="https://github.com/yerincho04/DB_Chatbot/blob/main/testing/README.md">Evaluation setup</a></p>
           <details>
-            <summary>Technical details</summary>
-            <p>Collected and structured Korea Fair Trade Commission disclosure data across five tables covering 2021–2024. Compared tool configurations to balance answer accuracy against response latency.</p>
+            <summary>Data grounding and agent evaluation</summary>
+            <ul>
+              <li><strong>Data layer:</strong> normalize selected FTC API records into brand master, annual statistics, store-type, and cost tables. Resolve brand queries using normalized names, data-derived search signals, confidence thresholds, and an optional semantic fallback before querying records.</li>
+              <li><strong>Tool interface:</strong> expose bounded functions for overviews, comparisons, conditional search, trend analysis, and fallback lookup.</li>
+              <li><strong>Agent modes:</strong> compare a model-only baseline, one-shot tool use, and an iterative tool-calling loop with a configurable round limit.</li>
+              <li><strong>Evaluation:</strong> use deterministic tests for data access and name resolution, shared prompt sets for mode comparisons, and expected-answer evaluations that record missing points and unsupported claims.</li>
+              <li><strong>Product integration:</strong> the FastAPI chat endpoint connects the data-grounded agent to a browser interface for brand exploration and comparison.</li>
+            </ul>
           </details>
         </article>
-        <article class="work-entry">
+        <article class="work-entry" id="stationgo">
           <div class="entry-heading"><h3>StationGo</h3><span class="year">2026</span></div>
           <p class="metadata">Data Visualization course project · March – June</p>
-          <p>A map-based service for choosing pop-up and promotion sites using Seoul subway ridership. Cleaned approximately 1.2 million records into a consistent dataset of 239 stations and derived demand, stability, and station-similarity metrics.</p>
-          <p class="tools">Data visualization · Demand analysis · Cosine similarity</p>
+          <p>An interactive map for exploring Seoul subway demand and choosing pop-up or promotion locations. Cleaned approximately 1.2 million records into a consistent dataset of 239 stations across Lines 1–8, with weekday/weekend, hourly, passenger-type, and boarding/alighting views.</p>
+          <p>Beyond raw ridership, the service compares peak concentration, usage stability, and similar stations. Its dashboard combines map filters, local and city-wide rankings, hourly charts, passenger distributions, and station-level comparisons.</p>
+          <p class="tools">React · Vite · Zustand · Recharts · Kakao Maps SDK · Data preprocessing</p>
+          <p class="resource-links"><a href="https://github.com/Daeung-03/StationGo">Team repository</a><a href="https://github.com/Daeung-03/StationGo/blob/main/README.md">Data and methodology</a></p>
+          <details>
+            <summary>Preprocessing and station recommendations</summary>
+            <ul>
+              <li>Aggregate daily records into weekly weekday/weekend buckets, reconcile renamed and transfer stations, and merge unstable or overlapping passenger categories.</li>
+              <li>Represent each station by time-of-day usage patterns across weekday/weekend, boarding/alighting, and passenger-type conditions.</li>
+              <li>Use cosine similarity to find stations with similar usage patterns rather than simply similar passenger totals; show the three closest stations in the interface.</li>
+              <li>Precompute summaries from CSV into JSON before development and production builds so the browser can filter and visualize aggregated data.</li>
+            </ul>
+          </details>
         </article>
-        <article class="work-entry">
+        <article class="work-entry" id="safeswitch">
           <div class="entry-heading"><h3>SafeSwitch</h3><span class="year">2026</span></div>
           <p class="metadata">Large Language Models course project · March – June</p>
-          <p>Conditional activation steering that intervenes when probes estimate a prompt is harmful. On Qwen2.5-1.5B and Llama-3.2-1B, probe-gated steering improved jailbreak refusal, while always-on steering degraded performance.</p>
-          <p class="tools">LLM safety · Activation steering · Model evaluation</p>
+          <p>Conditional activation steering for Qwen2.5-1.5B and Llama-3.2-1B. Two probes estimate whether a prompt is harmful and whether the model is already likely to refuse it. Their combined gate controls the strength of a learned steering vector during generation.</p>
+          <p>Compared unmodified models, always-on steering, and conditional steering across harmful, jailbreak, and benign prompts. The released results show higher jailbreak refusal with unchanged benign compliance under conditional steering.</p>
+          <p class="tools">PyTorch · Transformers · Linear probes · Activation steering · Ablation studies</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/LLM_finalproject">Code</a><a href="https://github.com/yerincho04/LLM_finalproject/blob/main/results/eval/summary_table.csv">Reported results</a></p>
+          <details>
+            <summary>Gating method and evaluation results</summary>
+            <p>The gate increases with estimated harmfulness and decreases when the model is already likely to refuse. A forward hook adds the scaled steering vector to the selected transformer layer; the same pipeline supports always-on and no-steering ablations.</p>
+            <div class="table-wrap" role="region" aria-label="SafeSwitch reported results" tabindex="0">
+              <table>
+                <caption>Reported evaluation · Baseline → SafeSwitch</caption>
+                <thead><tr><th scope="col">Model</th><th scope="col">Jailbreak refusal</th><th scope="col">Benign compliance</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Llama-3.2-1B</th><td>80% → 86%</td><td>98% → 98%</td></tr>
+                  <tr><th scope="row">Qwen2.5-1.5B</th><td>76% → 86%</td><td>96% → 96%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Each model is evaluated on 50 prompts per split. The implementation labels steered refusals with a text-pattern heuristic, and benign compliance is defined as one minus refusal rate rather than a measure of answer quality.</p>
+          </details>
         </article>
-        <article class="work-entry">
+        <article class="work-entry" id="rezoom">
           <div class="entry-heading"><h3>Rezoom</h3><span class="year">2025</span></div>
           <p class="metadata">Full Stack Developer · March – June</p>
-          <p>An AI-powered résumé analysis service that explains likely rejection reasons and suggests improvements. Built a GPT API pipeline for structured feedback and a Streamlit frontend prototype.</p>
-          <p class="tools">GPT API · Streamlit · Full-stack development</p>
+          <p>An AI-assisted résumé and application-writing service that uses a target company and role to generate structured feedback and actionable improvement tasks. My work included a Streamlit frontend prototype and the user flow for presenting feedback clearly.</p>
+          <p>The public implementation is a Node.js/Express application with EJS pages and SQLite persistence. It separates feedback from improvement tasks, saves analysis history, and provides a dedicated to-do view and follow-up chat.</p>
+          <p class="tools">OpenAI API · Node.js · Express · EJS · SQLite · Streamlit prototype</p>
+          <p class="resource-links"><a href="https://github.com/yerincho04/Rezoom">Code</a><a href="https://github.com/yerincho04/Rezoom/blob/main/rezoom/server.js">Application implementation</a></p>
+          <details>
+            <summary>Feedback and review workflow</summary>
+            <ul>
+              <li>Combine the application text with the intended company and role before requesting feedback from the GPT API.</li>
+              <li>Parse the generated response into feedback and a separate action list, and clean formatting for display in the application.</li>
+              <li>Store analyses for later review, organize generated tasks in a to-do page, and support follow-up questions with conversation context.</li>
+            </ul>
+          </details>
         </article>
       </section>
 
@@ -159,7 +242,10 @@
         <h2 id="activities-title">Activities</h2>
         <div class="dated-entry">
           <div>
-            <div class="entry-heading"><h3>GDGoC Yonsei</h3><span class="date">Sep 2025 – Aug 2026</span></div><p class="role">AI/ML Member &amp; Developer Relations</p><p>Ran weekly research sessions and shared findings through presentations and discussions. For Demo Day, built an AI service for a lecture-note sharing platform that summarizes PDFs and images and checks extracted claims against external evidence.</p></div>
+            <div class="entry-heading"><h3>GDGoC Yonsei</h3><span class="date">Sep 2025 – Aug 2026</span></div><p class="role">AI/ML Member &amp; Developer Relations</p><p>Ran weekly research sessions and shared findings through presentations and discussions. For Demo Day, built the AI service for a lecture-note sharing platform.</p>
+            <p>The service extracts PDF text and performs Korean/English OCR on images, then generates summaries, key concepts, difficulty estimates, and study-time estimates. A separate fact-checking pipeline extracts verifiable claims, retrieves external evidence including Semantic Scholar results, and assesses claim accuracy.</p>
+            <p class="tools">Node.js · OpenAI GPT-4o-mini · Tesseract OCR · PDF extraction · Semantic Scholar</p>
+            <p class="resource-links"><a href="https://github.com/gdgoc-otp-team-3/gdgoc-otp-team-3-ai">AI service code</a><a href="https://github.com/gdgoc-otp-team-3/gdgoc-otp-team-3-ai/blob/main/src/services/factCheckService.js">Fact-checking pipeline</a></p></div>
         </div>
       </section>
 
