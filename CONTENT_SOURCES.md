@@ -23,3 +23,17 @@ The résumé supplies roles, dates, awards, personal contributions, and the orig
 - Rezoom’s Streamlit prototype is supported by the résumé; the public repository contains Express/EJS and SQLite. Both are described separately.
 - Naver internship details remain résumé-based; no matching public project repository was identified in the accessible owner/team repositories.
 - Reported ML experiments were inspected, not rerun as part of the website update.
+
+## Repository visuals
+
+Figures are copied unchanged from the public repositories below; CSS displays them in grayscale. Captions distinguish diagnostics from task-performance results. GitHub originals are linked alongside each visual.
+
+- `assets/work/world-knowledge-results.png`: https://github.com/yerincho04/YeahPick/blob/Yerin/diagnostics/report/figures/behaviour_success.png
+- `assets/work/asyncmixvla-results.png`: https://github.com/yerincho04/AsyncMixVLA/blob/main/figures/table2_panel_a_gains_losses.png
+- `assets/work/fm-policy-drift.png`: https://github.com/yerincho04/IngChicken-FM/blob/main/drift_cosine_long.png
+- `assets/work/winwin-architecture.png`: https://github.com/yerincho04/DB_Chatbot/blob/main/testing/artifacts/visuals/agent_architecture_comparison.png
+- `assets/work/safeswitch-results.png`: https://github.com/yerincho04/LLM_finalproject/blob/main/results/figures/fig1_main_results.png
+- `assets/work/gifpt-convolution.mp4`: https://github.com/yerincho04/GIFPT/blob/dev/shared/results/videos/CNNScene/cnn_param_demo.mp4
+- `assets/work/gifpt-poster.png`: thumbnail extracted from the original video with macOS Quick Look. CSS inverts the video's dark canvas for black lettering on white; the source video is unchanged.
+
+The world-knowledge figure belongs to the later [photo-experiment report](https://github.com/yerincho04/YeahPick/blob/Yerin/diagnostics/report/REPORT_ko.md), not the earlier 240-rollout pilot. FM-SDFT drift is explained by [the plotting script](https://github.com/yerincho04/IngChicken-FM/blob/main/scripts/visualize_drift_extended.py); it is not a success-rate or forgetting plot. StationGo and Rezoom had no suitable explanatory diagrams among the repository assets inspected.
