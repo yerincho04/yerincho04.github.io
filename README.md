@@ -4,7 +4,7 @@ Yerin Cho’s personal portfolio: https://yerincho04.github.io/
 
 ## Updating the portfolio
 
-The homepage is a static website served directly from the root of the `main` branch by GitHub Pages. No build or dependency installation is required. The monochrome homepage uses native HTML disclosure controls and works without JavaScript or external fonts.
+The homepage is a static website served directly from the root of the `main` branch by GitHub Pages. No build or dependency installation is required. The homepage uses a profile sidebar and a separate content column. All text is pure black (#000000) on white. It uses native HTML disclosure controls and works without JavaScript or external fonts.
 
 - `index.html`: page content and structure
 - `styles.css`: responsive styles

@@ -8,61 +8,62 @@
   <title>Yerin Cho</title>
   <meta name="description" content="Yerin Cho — Computer Science at Yonsei University. Experience in AI engineering, vision-language-action models, robot learning, and LLM evaluation.">
   <link rel="canonical" href="https://yerincho04.github.io/">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.svg?v=3" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=20261114-sidebar-black">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="page">
-    <header class="site-header">
-      <a class="site-name" href="#about">Yerin Cho</a>
-      <nav aria-label="Main navigation">
+    <aside class="profile" aria-label="Profile and navigation">
+      <div class="identity">
+        <h1>Yerin Cho</h1>
+        <p>Computer Science<br>Yonsei University</p>
+        <p>Seoul, South Korea</p>
+      </div>
+      <ul class="contact-links" aria-label="Contact and profile links">
+        <li><a href="mailto:yerincho04@gmail.com">Email</a></li>
+        <li><a href="https://github.com/yerincho04">GitHub</a></li>
+        <li><a href="assets/Resume_Yerin_Cho.docx" download>Download résumé</a></li>
+      </ul>
+      <nav aria-label="Sections">
+        <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#research">Research</a>
         <a href="#work">Projects</a>
         <a href="#education">Education</a>
+        <a href="#activities">Activities</a>
+        <a href="#skills">Skills &amp; languages</a>
       </nav>
-    </header>
+    </aside>
 
     <main id="main">
-      <section class="intro" id="about" aria-labelledby="name">
-        <h1 id="name">Yerin Cho</h1>
-        <p class="subtitle">Computer Science, Yonsei University · Seoul, South Korea</p>
-        <div class="bio">
-          <p>I’m a Computer Science undergraduate at Yonsei University, working on AI engineering and robot learning. My interests include vision-language-action (VLA) models, continual learning, and the evaluation of AI systems.</p>
-          <p>I previously worked on search quality evaluation at Naver and efficient VLA inference as a visiting scholar at UC Irvine. At Yonsei’s Edge AI Lab, I study reliable robot decision-making and world models for VLA systems.</p>
-        </div>
-        <ul class="profile-links" aria-label="Contact and profile links">
-          <li><a href="mailto:yerincho04@gmail.com">Email</a></li>
-          <li><a href="https://github.com/yerincho04">GitHub</a></li>
-          <li><a href="assets/Resume_Yerin_Cho.docx" download>Résumé <span class="file-type">(DOCX)</span></a></li>
-        </ul>
+      <section class="intro" id="about" aria-labelledby="about-title">
+        <h2 id="about-title">About</h2>
+        <p>I’m a Computer Science undergraduate at Yonsei University. I work on AI engineering and robot learning, with interests in vision-language-action (VLA) models, continual learning, and model evaluation.</p>
+        <p>Previously, I worked on search quality evaluation at Naver and efficient VLA inference as a visiting scholar at UC Irvine. I’m currently an undergraduate research intern at Yonsei’s Edge AI Lab, studying reliable robot decision-making and world models for VLA systems.</p>
       </section>
 
       <section id="experience" class="section" aria-labelledby="experience-title">
         <h2 id="experience-title">Experience</h2>
         <div class="dated-entry">
-          <p class="date">Feb 2026 – Present</p>
           <article>
-            <h3>Edge AI Lab, Yonsei University</h3>
+            <div class="entry-heading"><h3>Edge AI Lab, Yonsei University</h3><span class="date">Feb 2026 – Present</span></div>
             <p class="role">Undergraduate Research Intern</p>
             <p class="metadata">Advisor: Prof. Dong Jun Han</p>
             <p>Research on uncertainty estimation, confidence calibration, and robust decision-making in VLA models. Current work focuses on world models and world action models for robot learning.</p>
           </article>
         </div>
         <div class="dated-entry">
-          <p class="date">Jul – Sep 2026</p>
           <article>
-            <h3>University of California, Irvine</h3>
+            <div class="entry-heading"><h3>University of California, Irvine</h3><span class="date">Jul – Sep 2026</span></div>
             <p class="role">Visiting Scholar</p>
             <p class="metadata">Advisor: Prof. Nikil Dutt</p>
             <p>Designed AsyncMixVLA for efficient, robust VLA inference. Developed asynchronous policy switching and observation alignment, reducing policy-switch latency from approximately 271 ms to 2–26 ms in evaluated configurations while maintaining comparable task performance.</p>
           </article>
         </div>
         <div class="dated-entry">
-          <p class="date">Jul – Aug 2025</p>
           <article>
-            <h3>Naver Corp.</h3>
+            <div class="entry-heading"><h3>Naver Corp.</h3><span class="date">Jul – Aug 2025</span></div>
             <p class="role">Search Intelligence Core Ranking MLOps Intern</p>
             <p>Built an LLM-based search quality evaluation agent using HyperCLOVA X and LangChain. Automated query generation, multi-engine result collection, evaluation, anomaly detection, and reporting with Prefect and MongoDB.</p>
             <p>Validated LLM judgments against human evaluations to refine scoring rubrics and prompts and reduce manual quality analysis.</p>
@@ -105,7 +106,7 @@
       </section>
 
       <section id="work" class="section" aria-labelledby="projects-title">
-        <h2 id="projects-title">Selected Projects</h2>
+        <h2 id="projects-title">Projects</h2>
         <article class="work-entry">
           <div class="entry-heading"><h3>GIFPT</h3><span class="year">2025</span></div>
           <p class="metadata">Gold Award · SW-Centered University GenAI Contest</p>
@@ -149,20 +150,20 @@
       <section id="education" class="section" aria-labelledby="education-title">
         <h2 id="education-title">Education</h2>
         <div class="dated-entry">
-          <p class="date">Mar 2023 – Present</p>
-          <div><h3>Yonsei University</h3><p class="role">B.S. in Computer Science</p><p class="metadata">Seoul, South Korea</p><p>Academic Excellence Award, Spring 2026.</p><details><summary>Relevant coursework</summary><p>Linear Algebra and Its Applications, Probability and Statistics, Discrete Structures, Data Structures, Databases, Computer Vision, Large Language Models, AI Systems, AI and Financial Engineering, Introduction to Data Visualization.</p></details></div>
+          <div>
+            <div class="entry-heading"><h3>Yonsei University</h3><span class="date">Mar 2023 – Present</span></div><p class="role">B.S. in Computer Science</p><p class="metadata">Seoul, South Korea</p><p>Academic Excellence Award, Spring 2026.</p><details><summary>Relevant coursework</summary><p>Linear Algebra and Its Applications, Probability and Statistics, Discrete Structures, Data Structures, Databases, Computer Vision, Large Language Models, AI Systems, AI and Financial Engineering, Introduction to Data Visualization.</p></details></div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="activities-title">
+      <section id="activities" class="section" aria-labelledby="activities-title">
         <h2 id="activities-title">Activities</h2>
         <div class="dated-entry">
-          <p class="date">Sep 2025 – Aug 2026</p>
-          <div><h3>GDGoC Yonsei</h3><p class="role">AI/ML Member &amp; Developer Relations</p><p>Ran weekly research sessions and shared findings through presentations and discussions. For Demo Day, built an AI service for a lecture-note sharing platform that summarizes PDFs and images and checks extracted claims against external evidence.</p></div>
+          <div>
+            <div class="entry-heading"><h3>GDGoC Yonsei</h3><span class="date">Sep 2025 – Aug 2026</span></div><p class="role">AI/ML Member &amp; Developer Relations</p><p>Ran weekly research sessions and shared findings through presentations and discussions. For Demo Day, built an AI service for a lecture-note sharing platform that summarizes PDFs and images and checks extracted claims against external evidence.</p></div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="skills-title">
+      <section id="skills" class="section" aria-labelledby="skills-title">
         <h2 id="skills-title">Skills &amp; Languages</h2>
         <dl class="skills">
           <div><dt>Machine learning</dt><dd>Robot learning (VLA), continual learning, uncertainty estimation, fine-tuning, model evaluation</dd></div>
