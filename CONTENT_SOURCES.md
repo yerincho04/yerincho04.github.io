@@ -18,7 +18,7 @@ The résumé supplies roles, dates, awards, personal contributions, and the orig
 
 - YeahPick extends upstream Act2Answer. The upstream paper and its headline findings are not represented as Yerin’s publication or results.
 - AsyncMixVLA percentages come from the release README; the report gives rounded values and paired comparisons. Its 238-cell timing measurements are not substituted for the résumé’s separate latency figures in the experience section.
-- FM-SDFT’s 72.0% to 80.5% success-rate result and NBT values come from the résumé. Repository evidence supports the implementation and experiment structure.
+- FM-SDFT results now come from the user-provided Ing-Chicken final report, Table 6 (pp. 11–12). These include the résumé's ER comparison and the additional pretraining + replay comparison. Repository evidence supports the implementation and experiment structure.
 - SafeSwitch figures come from the committed evaluation artifacts, with 50 prompts per split for each model. Compliance is a refusal-based proxy, not correctness.
 - Rezoom’s Streamlit prototype is supported by the résumé; the public repository contains Express/EJS and SQLite. Both are described separately.
 - Naver internship details remain résumé-based; no matching public project repository was identified in the accessible owner/team repositories.
@@ -26,7 +26,7 @@ The résumé supplies roles, dates, awards, personal contributions, and the orig
 
 ## Repository visuals
 
-Figures are copied unchanged from the public repositories below; They retain their original colours. Captions distinguish diagnostics from task-performance results. GitHub originals are linked alongside each visual.
+Figures are copied unchanged from the public repositories below; they retain their original colours. Captions distinguish diagnostics from task-performance results. GitHub originals are linked alongside each visual.
 
 - `assets/work/world-knowledge-results.png`: https://github.com/yerincho04/YeahPick/blob/Yerin/diagnostics/report/figures/behaviour_success.png
 - `assets/work/asyncmixvla-results.png`: https://github.com/yerincho04/AsyncMixVLA/blob/main/figures/table2_panel_a_gains_losses.png
@@ -36,3 +36,14 @@ Figures are copied unchanged from the public repositories below; They retain the
 - `assets/work/gifpt-poster.png`: thumbnail extracted from the original video with macOS Quick Look. The source video and its colours are unchanged.
 
 The world-knowledge figure belongs to the later [photo-experiment report](https://github.com/yerincho04/YeahPick/blob/Yerin/diagnostics/report/REPORT_ko.md), not the earlier 240-rollout pilot. FM-SDFT drift is explained by [the plotting script](https://github.com/yerincho04/IngChicken-FM/blob/main/scripts/visualize_drift_extended.py); it is not a success-rate or forgetting plot. StationGo and Rezoom had no suitable explanatory diagrams among the repository assets inspected.
+
+## FM-SDFT final report
+
+Source: user-provided `잉치킨_최종보고서.pdf`, titled *On-Policy Distillation for Mitigating Catastrophic Forgetting in Continuous Action Policies*, Ing-Chicken, May 2026. Authors: 김예나, 임채윤, 조예린, 채재호.
+
+- `assets/work/fm-sdft-pipeline.png`: original embedded image from Figure 2, page 6 (1280 × 720).
+- `assets/work/fm-sdft-main-results.png`: original embedded image from Figure 5, page 13 (979 × 541).
+- Images are extracted directly, retaining the original colours and resolution. The full report is not published with the site.
+- The main comparison table transcribes Table 6's ER and PT+ER rows with and without FM-SDFT. Its reported averages cover Spatial, Goal and Long, not Object.
+- Table 6 and the abstract report 82.3% success and 0.075 NBT for SDFT + PT + ER. Later prose reports 85.8% and different baseline averages; the website follows Table 6, whose selected-row averages agree with the suite values up to rounding. Other inconsistent averages in the SDFT PT-only row are not used in the summary table. Figure 5 reports suite-level comparisons rather than these averages.
+- Final experimental settings are taken from pages 9 and 12: CLIP version, 220 steps per epoch, distillation weight 0.1. Results were transcribed and checked against the report, not rerun.

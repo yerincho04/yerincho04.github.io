@@ -105,13 +105,31 @@
           <p class="metadata">Capstone research · February – July</p>
           <p class="resource-links"><a href="https://github.com/yerincho04/IngChicken-FM">GitHub · FM-SDFT</a><a href="https://github.com/yerincho04/cl_diffusion_ER">GitHub · Replay baseline</a></p>
           <p>Studied how robot policies can learn new tasks while retaining earlier ones. Adapted self-distillation fine-tuning to continuous-action policies by matching teacher and student predictions in flow-matching velocity space.</p>
-          <p class="result"><strong>Result:</strong> In the evaluation reported in my résumé, average success increased from 72.0% to 80.5% over experience replay, while forgetting (NBT) decreased from 0.223 to 0.171.</p>
           <figure class="project-figure">
-            <a class="figure-preview" href="assets/work/fm-policy-drift.png" data-figure aria-label="Enlarge figure: How much does a policy change as it learns?">
-              <img src="assets/work/fm-policy-drift.png" width="1335" height="729" loading="lazy" decoding="async" alt="Policy drift on LIBERO-Long task-0 observations after each training task. Circles: PT-only; squares: SDFT.">
+            <a class="figure-preview" href="assets/work/fm-sdft-pipeline.png" data-figure aria-label="Enlarge FM-SDFT pipeline">
+              <img src="assets/work/fm-sdft-pipeline.png" width="1280" height="720" loading="lazy" decoding="async" alt="FM-SDFT pipeline: current-task and replay data train a student policy, while a separate buffer of previous-task rollouts supplies observations to a frozen teacher and the student. Their velocity predictions define the self-distillation loss, combined with the flow-matching loss.">
             </a>
-            <figcaption><strong>How much does a policy change as it learns?</strong> This diagnostic compares predicted action trajectories with the pretrained model using mean cosine distance. SDFT stays closer to the base model at most intermediate checkpoints; this measures policy drift, separately from task success and forgetting. <a href="https://github.com/yerincho04/IngChicken-FM/blob/main/drift_cosine_long.png">Original figure on GitHub</a> · <a href="assets/work/fm-policy-drift.png" data-figure>Enlarge figure</a></figcaption>
+            <figcaption><strong>Learning new tasks while preserving previous behaviour.</strong> Current-task data and experience replay train the student. A frozen teacher supplies a second learning signal through velocity matching on observations from previous-task rollouts. Ing-Chicken final report, Figure 2 (p. 6). <a href="assets/work/fm-sdft-pipeline.png" data-figure>Enlarge figure</a></figcaption>
           </figure>
+          <figure class="project-figure">
+            <a class="figure-preview" href="assets/work/fm-sdft-main-results.png" data-figure aria-label="Enlarge FM-SDFT main results">
+              <img src="assets/work/fm-sdft-main-results.png" width="979" height="541" loading="lazy" decoding="async" alt="Main results across LIBERO-Spatial, Goal and Long. Light blue bars show the baseline and dark blue bars show FM-SDFT, with four settings: no pretraining or replay, pretraining, replay, and pretraining plus replay. Top row: success rate, higher is better. Bottom row: forgetting measured by NBT, lower is better.">
+            </a>
+            <figcaption><strong>Main results across three LIBERO suites.</strong> The report compares each training setting with and without FM-SDFT. Adding FM-SDFT to replay raises success from 71.9% to 85.0% on Goal and from 62.5% to 75.0% on Long. PT = pretraining; ER = experience replay. Ing-Chicken final report, Figure 5 (p. 13). <a href="assets/work/fm-sdft-main-results.png" data-figure>Enlarge figure</a></figcaption>
+          </figure>
+          <div class="table-wrap" role="region" aria-label="FM-SDFT main results table" tabindex="0">
+            <table>
+              <caption>Reported averages across Spatial, Goal and Long · Table 6 (pp. 11–12)</caption>
+              <thead><tr><th scope="col">Training method</th><th scope="col">Success rate ↑</th><th scope="col">Forgetting (NBT) ↓</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Experience replay</th><td>72.0%</td><td>0.223</td></tr>
+                <tr><th scope="row">Experience replay + FM-SDFT</th><td>80.5%</td><td>0.171</td></tr>
+                <tr><th scope="row">Pretraining + replay</th><td>79.0%</td><td>0.115</td></tr>
+                <tr><th scope="row"><strong>Pretraining + replay + FM-SDFT</strong></th><td><strong>82.3%</strong></td><td><strong>0.075</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="result">The combined method achieves the highest reported average success and lowest average forgetting in Table 6. Each suite contains 10 sequentially learned tasks; the final experiments use CLIP text embeddings and a distillation weight of λ = 0.1.</p>
           <details>
             <summary>Training design and evaluation</summary>
             <p>The implementation combines a frozen previous-task teacher, Euler-integrated action trajectories, and a task-balanced experience replay buffer. Experiments separate the effects of pretraining, replay, and self-distillation across LIBERO task suites.</p>
@@ -122,6 +140,15 @@
               <li><strong>Ablations:</strong> compare pretraining only, replay only, pretraining plus replay, and additional self-distillation. Evaluate saved checkpoints with success-rate matrices and forgetting metrics.</li>
               <li><strong>Reproducibility:</strong> the repositories include suite configurations, sequential-training scripts, rollout evaluation, and batch execution support for Slurm and Singularity.</li>
             </ul>
+          </details>
+          <details>
+            <summary>Additional analysis: policy drift</summary>
+            <figure class="project-figure">
+              <a class="figure-preview" href="assets/work/fm-policy-drift.png" data-figure aria-label="Enlarge policy drift diagnostic">
+                <img src="assets/work/fm-policy-drift.png" width="1335" height="729" loading="lazy" decoding="async" alt="Policy drift on LIBERO-Long task-0 observations after each training task. Circles: PT-only; squares: SDFT.">
+              </a>
+              <figcaption>This diagnostic compares predicted action trajectories with the pretrained model using mean cosine distance. SDFT stays closer to the base model at most intermediate checkpoints; this measures policy drift, separately from task success and forgetting. <a href="https://github.com/yerincho04/IngChicken-FM/blob/main/drift_cosine_long.png">Original figure on GitHub</a> · <a href="assets/work/fm-policy-drift.png" data-figure>Enlarge figure</a></figcaption>
+            </figure>
           </details>
         </article>
       </section>
